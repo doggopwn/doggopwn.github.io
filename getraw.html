@@ -14,6 +14,7 @@
         const urlSplit = ref.split("/").flatMap(el => {
           switch (el){
             case "blob":
+            case "tree":
               return [];
             case "github.com":
               return "raw.github.com";
