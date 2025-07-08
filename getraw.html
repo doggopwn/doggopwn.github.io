@@ -26,24 +26,13 @@
 								return el;
 						}});
 					const newUrl = urlSplit.join("/") + `/${filename}`;
-
-					const ifr = document.createElement("iframe");
-					ifr.style.display = "none";
-					ifr.src = newUrl;
-					document.body.appendChild(ifr);
-
-					const ifrDoc = ifr.contentDocument || ifr.contentWindow.document;
-					const int = setInterval(_ => {
-						if (ifrDoc.readyState == "complete" || ifrDoc.readyState == "interactive"){
-							clearInterval(int);
-							document.location.href = ref;
-						}
-					}, 500);
+					window.location.href = newUrl;
 				} else {
 					window.close();
 				}
 			};
 		</script>
+		<h1>You may close this tab now.</h1>
 	</body>
 </html>
 
