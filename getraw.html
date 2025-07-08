@@ -24,9 +24,8 @@
               return el;
           }});
 		  console.log(urlSplit);
-        const newUrl = urlSplit.slice(0, urlSplit.length).join("/") + `/${filename}`;
-        console.log(newUrl);
-//        window.location.href = newUrl;
+        const newUrl = urlSplit.join("/") + `/${filename}`;
+        window.location.href = newUrl;
       } else {
         window.close();
       }
