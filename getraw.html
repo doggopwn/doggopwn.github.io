@@ -26,6 +26,7 @@
 		  console.log(urlSplit);
         const newUrl = urlSplit.join("/") + `/${filename}`;
         window.location.href = newUrl;
+		window.location.href = ref;
       } else {
         window.close();
       }
