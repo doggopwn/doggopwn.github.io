@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Zjištění odkud jsi přišel, ty stalkere</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h1>Vítej, ty zvědavej kokot!</h1>
+  <p id="info">Zjišťuju, odkud jsi sem přilezl...</p>
+
+  <script>
+    window.onload = function () {
+      const ref = document.referrer;
+      const info = document.getElementById("info");
+      if (ref) {
+        info.innerText = "Přišel jsi z: " + ref;
+      } else {
+        info.innerText = "Do prdele, netuším odkud jsi přišel.";
+      }
+    };
+  </script>
+</body>
+</html>
+
