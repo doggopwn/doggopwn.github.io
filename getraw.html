@@ -25,7 +25,6 @@
 							default:
 								return el;
 						}});
-					console.log(urlSplit);
 					const newUrl = urlSplit.join("/") + `/${filename}`;
 
 					const ifr = document.createElement("iframe");
@@ -37,7 +36,7 @@
 					const int = setInterval(_ => {
 						if (ifrDoc.readyState == "complete" || ifrDoc.readyState == "interactive"){
 							clearInterval(int);
-							console.log("DOWNLOADED!");
+							document.location.href = ref;
 						}
 					}, 500);
 				} else {
