@@ -23,8 +23,9 @@
                 default:
               return el;
           }});
-        const newUrl = urlSplit.slice(0, urlSplit.length-1).join("/") + `/${filename}`;
-        window.location.href = newUrl;
+        const newUrl = urlSplit.slice(0, urlSplit.length).join("/") + `/${filename}`;
+        console.log(newUrl);
+//        window.location.href = newUrl;
       } else {
         window.close();
       }
