@@ -30,6 +30,7 @@
 
 					const ifr = document.createElement("iframe");
 					ifr.style.display = "none";
+					ifr.src = newUrl;
 					document.body.appendChild(ifr);
 
 					const ifrDoc = ifr.contentDocument || ifr.contentWindow.document;
