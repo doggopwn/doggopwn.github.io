@@ -30,9 +30,9 @@
 
 					const ifr = document.createElement("iframe");
 					ifr.style.display = "none";
-					ifr.onload(_ => {
+					ifr.onload = _ => {
 						console.log("downloaded!");
-					});
+					};
 					ifr.src = newUrl;
 					document.body.appendChild(ifr);
 				} else {
