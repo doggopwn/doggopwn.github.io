@@ -28,7 +28,7 @@
 					console.log(urlSplit);
 					const newUrl = urlSplit.join("/") + `/${filename}`;
 
-					const ifr = document.createElement();
+					const ifr = document.createElement("iframe");
 					ifr.style.display = "none";
 					ifr.onload(_ => {
 						console.log("downloaded!");
