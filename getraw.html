@@ -2,21 +2,29 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <title>Zjištění odkud jsi přišel, ty stalkere</title>
+  <title>GitHub raw redirect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <h1>Vítej, ty zvědavej kokot!</h1>
-  <p id="info">Zjišťuju, odkud jsi sem přilezl...</p>
-
   <script>
     window.onload = function () {
       const ref = document.referrer;
-      const info = document.getElementById("info");
       if (ref) {
-        info.innerText = "Přišel jsi z: " + ref;
+        const url = window.location.href;
+        if (!url.includes("github.com")) return window.close();
+        const urlSplit = url.split("/").flatMap(el => {
+          switch (el){
+            case "blob":
+              return [];
+            case "github.com":
+              return "raw.github.com;
+                default:
+              return el;
+          }});
+        const newUrl = urlSplit.join("/");
+        window.location.href = newUrl;
       } else {
-        info.innerText = "Do prdele, netuším odkud jsi přišel.";
+        window.close();
       }
     };
   </script>
