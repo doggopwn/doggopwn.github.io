@@ -7,8 +7,8 @@
     window.onload = function () {
       const params = new URLSearchParams(window.location.search);
       const loc = params.get('loc');
-      if (kam) {
-		  document.body.innerHTML = `<h1><a href="${kam}">If you were not redirected automatically, please click here.</a></h1>`
+      if (loc) {
+		  document.body.innerHTML = `<h1><a href="${loc}">If you were not redirected automatically, please click here.</a></h1>`
           window.location.href = loc;
       } else {
 		  document.body.innerHTML = "<h1>Could not redirect properly. (No 'loc' parameter set)</h1>"
