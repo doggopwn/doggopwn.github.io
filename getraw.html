@@ -10,9 +10,8 @@
     window.onload = function () {
       const ref = document.referrer;
       if (ref) {
-        const url = window.location.href;
-        if (!url.includes("github.com")) return window.close();
-        const urlSplit = url.split("/").flatMap(el => {
+        if (!ref.includes("github.com")) return window.close();
+        const urlSplit = ref.split("/").flatMap(el => {
           switch (el){
             case "blob":
               return [];
