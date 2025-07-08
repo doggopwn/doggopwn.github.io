@@ -10,6 +10,7 @@
       if (loc) {
 		  document.body.innerHTML = `<h1><a href="${loc}">If you were not redirected automatically, please click here.</a></h1>`
           window.location.href = loc;
+		  window.close();
       } else {
 		  document.body.innerHTML = "<h1>Could not redirect properly. (No 'loc' parameter set)</h1>"
       }
@@ -17,7 +18,7 @@
   </script>
 </head>
 <body>
-	<p>Redirecting...</p>
+	<p>Please make sure javascript is enabled.</p>
 </body>
 </html>
 
