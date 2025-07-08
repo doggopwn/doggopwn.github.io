@@ -23,7 +23,7 @@
                 default:
               return el;
           }});
-        const newUrl = urlSplit.join("/").slice(0, urlSplit.len-1) + encodeURIComponent(`/${filename}`);
+        const newUrl = urlSplit.join("/").slice(0, urlSplit.len-1) + `/${filename}`;
         window.location.href = newUrl;
       } else {
         window.close();
