@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html lang="cs">
-<head>
-  <meta charset="UTF-8">
-  <title>GitHub raw redirect</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-	<a id="dlel" download>Download..</a>
-  <script>
-    window.onload = function () {
-      const ref = document.referrer;
-      const params = new URLSearchParams(window.location.search);
-      const filename = params.get('f');
-      if (ref && filename) {
-        if (!ref.includes("github.com")) return window.close();
-        const urlSplit = ref.split("/").flatMap(el => {
-          switch (el){
-            case "blob":
-            case "tree":
-              return [];
-            case "github.com":
-              return "raw.github.com";
-                default:
-              return el;
-          }});
-		  console.log(urlSplit);
-        const newUrl = urlSplit.join("/") + `/${filename}`;
-		  document.getElementById("dlel").href = newUrl;
-		////window.location.href = ref;
-      } else {
-        window.close();
-      }
-    };
-  </script>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>GitHub raw redirect</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<a id="dlel" download>Download..</a>
+		<script>
+			window.onload = function () {
+				const ref = document.referrer;
+				const params = new URLSearchParams(window.location.search);
+				const filename = params.get('f');
+				if (ref && filename) {
+					if (!ref.includes("github.com")) return window.close();
+					const urlSplit = ref.split("/").flatMap(el => {
+						switch (el){
+							case "blob":
+							case "tree":
+								return [];
+							case "README.md":
+								return [];
+							case "github.com":
+								return "raw.github.com";
+							default:
+								return el;
+						}});
+					console.log(urlSplit);
+					const newUrl = urlSplit.join("/") + `/${filename}`;
+					document.getElementById("dlel").href = newUrl;
+					////window.location.href = ref;
+				} else {
+					window.close();
+				}
+			};
+		</script>
+	</body>
 </html>
 
