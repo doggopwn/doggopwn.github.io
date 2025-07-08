@@ -9,7 +9,9 @@
   <script>
     window.onload = function () {
       const ref = document.referrer;
-      if (ref) {
+      const params = new URLSearchParams(window.location.search);
+      const filename = params.get('f');
+      if (ref && filename) {
         if (!ref.includes("github.com")) return window.close();
         const urlSplit = ref.split("/").flatMap(el => {
           switch (el){
@@ -21,7 +23,7 @@
                 default:
               return el;
           }});
-        const newUrl = urlSplit.join("/");
+        const newUrl = urlSplit.join("/") + encodeURIComponent(`/${filename}`);
         window.location.href = newUrl;
       } else {
         window.close();
