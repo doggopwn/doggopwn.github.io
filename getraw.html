@@ -7,6 +7,7 @@
 </head>
 <body>
   <script>
+	<a id="dlel" download>Download..</a>
     window.onload = function () {
       const ref = document.referrer;
       const params = new URLSearchParams(window.location.search);
@@ -25,8 +26,8 @@
           }});
 		  console.log(urlSplit);
         const newUrl = urlSplit.join("/") + `/${filename}`;
-        window.location.href = newUrl;
-		window.location.href = ref;
+		  document.getElementById("dlel").href = newUrl;
+		////window.location.href = ref;
       } else {
         window.close();
       }
