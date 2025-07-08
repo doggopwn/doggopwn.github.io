@@ -6,7 +6,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body>
-		<a id="dlel" download>Download..</a>
 		<script>
 			window.onload = function () {
 				const ref = document.referrer;
@@ -29,10 +28,13 @@
 					console.log(urlSplit);
 					const newUrl = urlSplit.join("/") + `/${filename}`;
 
-					const dlEl = document.getElementById("dlel");
-					dlEl.href = newUrl;
-					dlEl.click();
-					window.location.href = ref;
+					const ifr = document.createElement();
+					ifr.style.display = "none";
+					ifr.onload(_ => {
+						console.log("downloaded!");
+					});
+					ifr.src = newUrl;
+					document.body.appendChild(ifr);
 				} else {
 					window.close();
 				}
