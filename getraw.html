@@ -30,11 +30,15 @@
 
 					const ifr = document.createElement("iframe");
 					ifr.style.display = "none";
-					ifr.onload = _ => {
-						console.log("downloaded!");
-					};
-					ifr.src = newUrl;
 					document.body.appendChild(ifr);
+
+					const ifrDoc = ifr.contentDocument || ifr.contentWindow.document;
+					const int = setInterval(_ => {
+						if (ifrDoc.readyState == "complete" || ifrDoc.readyState == "interactive"){
+							clearInterval(int);
+							console.log("DOWNLOADED!");
+						}
+					}, 500);
 				} else {
 					window.close();
 				}
