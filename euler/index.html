@@ -9,11 +9,11 @@
 	<body onload="makeIndex()">
 		<script>
 			function makeIndex(){
-			const path = window.location.href.replace("/index.html","") + "/index"
+			const path = window.location.href.replace("/index.html","") + "/index";
 			fetch(path)
 				.then(res => {
 							for (const idx of res.split(",")){
-								alert(idx)	
+								alert(idx);	
 							}
 						})
 						}
