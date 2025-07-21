@@ -8,6 +8,7 @@
 	</head>
 	<body onload="makeIndex()">
 		<script>
+			function makeIndex(){
 			const path = window.location.href.replace("/index.html","") + "/index"
 			fetch(path)
 				.then(res => {
@@ -15,6 +16,7 @@
 								alert(idx)	
 							}
 						})
+						}
 		</script>
 		<h1>Project Euler solutions - DoggoPwn</h1>
 		<h2>Each solution contains PDF files with a mathemtical solution, a solution in JavaScript (high-level), C (low-level) and x64_86 Linux Assembly (lowest level).</h2>
