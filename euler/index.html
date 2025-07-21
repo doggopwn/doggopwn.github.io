@@ -11,6 +11,7 @@
 			function makeIndex(){
 			const path = window.location.href.replace("/index.html","") + "/index";
 			fetch(path)
+				.then(res => res.text())
 				.then(res => {
 							for (const idx of res.split(",")){
 								alert(idx);	
