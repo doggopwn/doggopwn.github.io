@@ -1,0 +1,99 @@
+\pdfminorversion=4
+\documentclass[]{article}
+
+%%%%%%%%%%%%%%%%%%%
+% Packages/Macros %
+%%%%%%%%%%%%%%%%%%%
+\usepackage{amssymb,latexsym,geometry,xcolor,framed,url,standalone}     % Standard packages
+\usepackage{amsmath}
+\usepackage{colors}
+%%%%%%%%%%%%
+% Document %
+%%%%%%%%%%%%
+\newgeometry{left=1cm,top=1cm,right=1cm,bottom=2cm}
+
+\begin{document}
+\allowdisplaybreaks
+\raggedbottom
+
+\section*{Euler Project - Problem 6 - Sum Square Difference}
+\subsection*{Task and corollaries}
+\input{task}
+\vspace{10pt}
+\noindent The needed corollaries for this proof can be studied in Appendix A.\\Assumed is knowledge of summation laws and arithmetic series.
+
+\subsection*{Finding the pattern}
+To better describe the patterns, let's assign letters to the specific natural numbers, starting with $a=1$, $b=2$, and so on.\\
+
+Demonstrated on $N=2$:
+\begin{align*}
+\mathbf{N} &= 2\\
+1^2 + 2^2 &\rightarrow \color{red}a^2 + b^2\color{black} \\
+&= 5\\
+(1 + 2)^2 &\rightarrow (a + b)^2 = \color{red}a^2\color{black} + 2ab + \color{red}b^2\color{black} \\
+&= 9\\[2ex]
+\Delta &= 4\\
+%
+\intertext{Notice the highlighted terms appear in both expressions. As a consequence of the Binomial expansion the first and last terms will always appear squared. Clearly, the difference consists purely of the other terms in the expansion.\newline\newline\indent Let's shift our focus on the expansion of the second expression (sum squared) only:}
+%
+\mathbf{N} &= 3 \\
+(a + b + c)^2 &= (a^2 + ab + ac) + (ba + b^2 + bc) + (ca + cb + c^2) \\
+&= a^2 + b^2 + c^2 + \color{red}2ab + 2ac + 2bc\color{black}\\[3ex]
+\mathbf{N} &= 4 \\
+(a + b + c + d)^2 &= ... + \color{red}2ab + 2ac + 2ad + 2bc + 2bd + 2cd\color{black} \\
+%
+\intertext{The FOIL expansion gives a hint as to what's going on - after summing the terms, we may notice that for any $N$, the difference is the product of the terms times two, for every pair of terms, each multiplied with each other exactly once.}
+\end{align*}
+
+\noindent \text{Generally, for N, where }a=1, ~b=2\text{ etc. until N:}\\~\\
+\text{1. In the inner brackets, we [summarize N-1 terms, starting with a, up until N-1]. We will call each term "i"}\\
+\text{2. We multiply those by the [sum of N-1 terms, starting with i+1, up until N]. We will call each term "j" }\\~\\
+\text{In other words, starting with a, we do:}\\
+$a\cdot b + a\cdot c + a\cdot d + ... + a\cdot N$\\~\\
+\text{And repeat for each number, increasing by 1 up until N-1, e.g. the next sequence would be:}\\
+$b\cdot c + b\cdot d + ... + b\cdot N$\\~\\
+\text{We then sum all these sequences, and multiply the result by 2. Notice we described the observed pattern:}\\
+$2[ a(b+c+d)     + b(c+d)     + c(d) + ... + (N-1)(N)]$\\
+\\
+\begingroup
+\addtolength{\jot}{1em}
+\subsection*{Deriving the formula}
+\begin{flalign*}
+&2\sum_{i=1}^{N-1}\sum_{j=i+1}^{N}i\cdot j & \text{rewritten as a double sum} \\
+&2\sum_{i=1}^{N-1}i\sum_{j=i+1}^{N}j & \text{extract independent term}\\
+&2\sum_{i=1}^{N-1}i(\sum_{j=1}^{N}j-\sum_{j=1}^{i}j) & \text{by }\textbf{Lemma 1} \\
+&2\sum_{i=1}^{N-1}i(N\frac{1+N}{2}-i\frac{1+i}{2}) & \text{by }\textbf{Lemma 2.1}\\
+&2\sum_{i=1}^{N-1}\frac{i}{2}[N(1+N)-i(1+i)] & \text{factor out }\frac{1}{2}\\
+&\sum_{i=1}^{N-1}i[N(1+N)-i(1+i)]& c\sum_{i=1}^{n}a_i=\sum_{i=1}^{n}ca_i\\ 
+&\sum_{i=1}^{N-1}i[N^2+N-(i^2+i)]&\text{distribute all brackets}\\
+&\sum_{i=1}^{N-1}(iN^2+iN-i^3-i^2) & \\
+&N^2\sum_{i=1}^{N-1}i+N\sum_{i=1}^{N-1}i-\sum_{i=1}^{N-1}i^3-\sum_{i=1}^{N-1}i^2 & \sum_{i=1}^{n}(a_i+b_i)=\sum_{i=1}^{n}a_i+\sum_{i=1}^{n}b_i\\
+&N^2\frac{(N-1)N}{2}+N\frac{N(N-1)}{2}-\frac{(N-1)^2(N^2)}{4}-\frac{N(N-1)(2N-1)}{6} & \text{by }\textbf{Lemmas 1.1, 1.2, 1.3}\\
+&N(N-1)(\frac{N^2}{2}+\frac{N}{2}-\frac{(N-1)N}{4}-\frac{2N-1}{6}) & \text{factor out }N(N-1)\\
+&N(N-1)(\frac{6N^2}{12}+\frac{6N}{12}-\frac{3N^2-3N}{12}-\frac{4N-2}{12}) &  \text{combine fractions}\\
+&N(N-1)\frac{3N^2+5N+2}{12} \\
+&N(N-1)\frac{(3N+2)(N+1)}{12} & \text{factor the numerator}\\
+&N\frac{(N^2-1)(3N+2))}{12} & (a+b)(a-b)=a^2-b^2\\
+&N\frac{3N^3+2N^2-3N-2}{12}\\
+&\frac{3N^4+2N^3-3N^2-2N}{12}& \text{distribute and simplify}\\
+\end{flalign*}
+\text{And we arrive at a closed form formula for the sum square difference for any N.}\\
+\subsection*{Answering the question ($N=100$)}
+\vspace{10pt}
+\begin{graybox}
+Find the difference between the sum of the squares of the first \textbf{one hundred} natural numbers and the square of the sum.
+\end{graybox}
+\vspace{15pt}
+Using the formula derived earlier:
+\begin{flalign*}
+&\frac{3(100)^4+2(100)^3-3(100)^2-2(100)}{12}\\
+&\frac{3(100000000) + 2(1000000) - 3(10000) - 2(100)}{12}\\
+&\frac{300000000 + 2000000 - 30000 - 200}{12}\\
+&\frac{302000000 - 30200}{12}\\
+&\frac{301969800}{12}\\
+&= \mathbf{25164150}
+\end{flalign*}
+\endgroup
+\newpage
+\input{corollaries}
+\end{document}

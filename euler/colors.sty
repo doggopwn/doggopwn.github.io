@@ -1,0 +1,22 @@
+% colors.tex - Style configuration
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{colors}
+
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+
+% Color definitions
+\definecolor{lightgray}{rgb}{0.95,0.95,0.95}  % Softer gray
+\definecolor{bordergray}{rgb}{0.7,0.7,0.7}    % Border color
+
+% Gray box environment
+\newtcolorbox{graybox}{
+    colback=lightgray,
+    colframe=bordergray,
+    boxrule=0.5pt,
+    arc=4pt,
+    width=0.9\linewidth,
+    center
+}
+
+\endinput

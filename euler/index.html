@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PE Solutions - DoggoPwn</title>
-  </head>
-  <body>
-    <h1>Project Euler solutions - DoggoPwn</h1>
-    <h2>Each solution contains PDF files with a mathemtical solution, a solution in JavaScript (high-level), C (low-level) and x64_86 Linux Assembly (lowest level).</h2>
-    <p>For each problem I try to find a pattern, find a closed-form formula for iterative exercises, or at least simplify as much possible.</p>
-    <br/>
-    <p><i>If an exercise is not listed here, try doggopwn.github.io/euler/X where X is the number of the exercise.</i></p>
-    <br/>
-    <ul>
-      <li><a href="/6">PE 6 - Sum Square Difference</a></li>
-    </ul>
-  </body>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>PE Solutions - DoggoPwn</title>
+	</head>
+	<body onload="makeIndex()">
+		<script>
+			const path = window.location.href.replace("/index.html","") + "/index"
+			fetch(path)
+				.then(res => {
+							for (const idx of res.split(",")){
+								alert(idx)	
+							}
+						})
+		</script>
+		<h1>Project Euler solutions - DoggoPwn</h1>
+		<h2>Each solution contains PDF files with a mathemtical solution, a solution in JavaScript (high-level), C (low-level) and x64_86 Linux Assembly (lowest level).</h2>
+		<p>For each problem I try to find a pattern, find a closed-form formula for iterative exercises, or at least simplify as much possible.</p>
+		<br/>
+		<p><i>If an exercise is not listed here, try doggopwn.github.io/euler/X where X is the number of the exercise.</i></p>
+		<br/>
+		<ul id="indexList">
+		</ul>
+	</body>
 </html>
