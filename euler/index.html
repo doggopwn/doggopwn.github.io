@@ -5,22 +5,26 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>PE Solutions - DoggoPwn</title>
+		<style>
+			body {
+				font-family: system-ui, sans-serif;
+				}
+		</style>
 	</head>
 	<body onload="makeIndex()">
 		<script>
 			function makeIndex(){
-			const listEl = document.getElementById("indexList");
-			const path = window.location.href.replace("/index.html","") + "/index";
-			fetch(path)
-				.then(res => res.text())
-				.then(res => {
-							for (const idx of res.split(",")){
-								const html = `<li><a href="/${idx}">${idx}</a></li>\n`;
-								listEl..insertAdjacentHTML("afterend", html);
-
-							}
+				const listEl = document.getElementById("indexList");
+				const path = window.location.href.replace("/index.html","") + "/index";
+				fetch(path)
+					.then(res => res.text())
+					.then(res => {
+						for (const dir of res.split(";")){
+							const html = `<li><a href="/${dir}">${dir}</a></li>`;
+							listEl.insertAdjacentHTML("afterend", html);
+						}
 					})
-				}
+			}
 		</script>
 		<h1>Project Euler solutions - DoggoPwn</h1>
 		<h2>Each solution contains PDF files with a mathemtical solution, a solution in JavaScript (high-level), C (low-level) and x64_86 Linux Assembly (lowest level).</h2>
