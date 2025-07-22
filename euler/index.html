@@ -19,8 +19,9 @@
 				fetch(path)
 					.then(res => res.text())
 					.then(res => {
-						for (const dir of res.split(";")){
-							const html = `<li><a href="/${dir}">${dir}</a></li>`;
+						for (const problem of res.split("\n")){
+							const [num, name] = problem.split("\x1f")
+							const html = `<li><a href="/${num}">${num} - ${name}</a></li>`;
 							listEl.insertAdjacentHTML("afterend", html);
 						}
 					})
