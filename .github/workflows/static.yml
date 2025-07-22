@@ -29,6 +29,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Generate Euler Pages
+        run: makepages.sh
+        working-directory: ./euler
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
