@@ -32,7 +32,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Generate Euler Pages
-        run: makepages.sh
+        run: ./makepages.sh
         working-directory: euler
       - name: Setup Pages
         uses: actions/configure-pages@v5
