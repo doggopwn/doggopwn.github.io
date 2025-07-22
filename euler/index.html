@@ -21,7 +21,7 @@
 					.then(res => {
 						for (const problem of res.trim().split("\n")){
 							const [num, name] = problem.split("\x1f")
-							const html = `<li><a href="/${num}">${num} - ${name}</a></li>`;
+							const html = `<li><a href="${num}">${num} - ${name}</a></li>`;
 							listEl.insertAdjacentHTML("afterend", html);
 						}
 					})
