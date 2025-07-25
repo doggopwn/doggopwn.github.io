@@ -31,6 +31,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Generate Euler LaTeX
+        run: ./makelatex.sh
+        working-directory: euler
+        if: "contains(github.events.head_commit.message, 'latex-regen')"
       - name: Generate Euler Pages
         run: ./makepages.sh
         working-directory: euler
