@@ -6,9 +6,17 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>PE Solutions - DoggoPwn</title>
 		<style>
-			body {
-				font-family: system-ui, sans-serif;
-				}
+body {
+	font-family: system-ui, sans-serif;
+}
+			#indexList {
+				list-style-type: disclosure-closed; 
+			}
+			#indexList > li a {
+				text-decoration: none;
+				color: #000;
+				padding: 10px;
+			}
 		</style>
 	</head>
 	<body onload="makeIndex()">
@@ -21,7 +29,7 @@
 					.then(res => {
 						for (const problem of res.trim().split("\n")){
 							const [num, name] = problem.split("\x1f")
-							const html = `<li><a href="${num}">${num} - ${name}</a></li>`;
+							const html = `<li value=${num}><b><a href="${num}">${name}</a></b></li>`;
 							listEl.insertAdjacentHTML("afterend", html);
 						}
 					})
@@ -31,7 +39,7 @@
 		<h2>Each solution contains PDF files with a mathematical solution, a solution in JavaScript (high-level), C (low-level) and x64_86 Linux Assembly (lowest level).</h2>
 		<p>For each problem I try to find a pattern, find a closed-form formula for iterative exercises, or at least simplify as much possible.</p>
 		<br/>
-		<ul id="indexList">
-		</ul>
+		<ol id="indexList">
+		</ol>
 	</body>
 </html>
