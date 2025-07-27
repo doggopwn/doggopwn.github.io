@@ -29,8 +29,8 @@ body {
 					.then(res => {
 						for (const problem of res.trim().split("\n")){
 							const [num, name] = problem.split("\x1f")
-							const html = `<li value=${num}><b><a href="${num}">${name}</a></b></li>`;
-							listEl.insertAdjacentHTML("afterend", html);
+							const html = `<li value="${num}"><b><a href="${num}">${name}</a></b></li>`;
+							listEl.insertAdjacentHTML("beforeend", html);
 						}
 					})
 			}
