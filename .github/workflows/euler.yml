@@ -1,0 +1,46 @@
+name: Generate static 'Euler Project' files
+
+on:
+  # Runs on pushes targeting the default branch
+  workflow_call:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "euler"
+  cancel-in-progress: true
+
+jobs:
+  # Single deploy job since we're just deploying
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Commit Euler LaTeX PDFs
+        id: latex-commit
+        needs: latex-regen
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "github-actions"
+          git add ./**/*.pdf
+          if [-z "$(git status --porcelain)"]; then
+            echo "::set-output name=push::false"
+          else 
+            echo "::set-output name=push::true"
+          fi
+      - name: Push Euler LaTeX
+        if: steps.commit.latex-commit.outputs.push == 'true'
+        uses: ad-m/github-push-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate Euler Pages
+        run: ./makepages.sh
+        working-directory: euler

@@ -23,6 +23,7 @@ concurrency:
 
 jobs:
   # Single deploy job since we're just deploying
+  uses: ./.github/workflows/euler.yml
   deploy:
     environment:
       name: github-pages
@@ -34,18 +35,15 @@ jobs:
         with:
           lfs: true
       - name: Generate Euler LaTeX
+        id: latex-regen
         run: ./makelatex.sh
         working-directory: euler
         if: "contains(github.event.head_commit.message, 'latex-regen')"
-      - name: Generate Euler Pages
-        run: ./makepages.sh
-        working-directory: euler
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
           path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
