@@ -3,24 +3,24 @@ description: Generates all the static files for the 'Euler Project' directory
 
 runs:
   using: "composite"  
-    steps:
-      - name: Commit Euler LaTeX PDFs
-        id: latex-commit
-        needs: latex-regen
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "github-actions"
-          git add ./**/*.pdf
-          if [-z "$(git status --porcelain)"]; then
-            echo "::set-output name=push::false"
-          else 
-            echo "::set-output name=push::true"
-          fi
-      #- name: Push Euler LaTeX
-      #  if: steps.commit.latex-commit.outputs.push == 'true'
-      #  uses: ad-m/github-push-action@master
-      #  with:
-      #    github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Generate Euler Pages
-        run: ./makepages.sh
-        working-directory: euler
+  steps:
+    - name: Commit Euler LaTeX PDFs
+      id: latex-commit
+      needs: latex-regen
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "github-actions"
+        git add ./**/*.pdf
+        if [-z "$(git status --porcelain)"]; then
+        echo "::set-output name=push::false"
+        else 
+        echo "::set-output name=push::true"
+        fi
+        #- name: Push Euler LaTeX
+        #  if: steps.commit.latex-commit.outputs.push == 'true'
+        #  uses: ad-m/github-push-action@master
+        #  with:
+        #    github-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Generate Euler Pages
+      run: ./makepages.sh
+      working-directory: euler
