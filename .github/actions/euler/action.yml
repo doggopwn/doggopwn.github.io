@@ -10,23 +10,26 @@ runs:
   using: "composite"  
   steps:
     - name: Genereate LaTeX PDFs
+      if: "contains(github.event.head_commit.message, 'latex-regen')"
+      id: pdf-regen
       run: ./makelatex.sh
       working-directory: euler
       shell: bash
     - name: Commit LaTeX PDFs
+      needs: pdf-regen
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "github-actions"
         git add ./**/*.pdf
         if [[ -n "$(git status --porcelain)" ]]; then
-          git commit -m "Commit generated Euler PDFs" -m "[skip actions]"
-          echo "PUSH_PDF=true" >> $GITHUB_ENV
+          git commit -m "Generate Euler PDFs" -m "[skip actions]"
+          echo "PUSH_EULER=true" >> $GITHUB_ENV
         else 
-          echo "PUSH_PDF=false" >> $GITHUB_ENV
+          echo "PUSH_EULER=false" >> $GITHUB_ENV
         fi
       shell: bash
     - name: Push Euler LaTeX
-      if: env.PUSH_PDF == 'true'
+      if: env.PUSH_EULER == 'true'
       uses: ad-m/github-push-action@master
       with:
         github-token: ${{ inputs.github_token }}
