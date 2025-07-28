@@ -4,9 +4,11 @@ description: Generates all the static files for the 'Euler Project' directory
 runs:
   using: "composite"  
   steps:
-    - name: Commit Euler LaTeX PDFs
-      id: latex-commit
-      needs: latex-regen
+    - name: Genereate LaTeX PDFs
+      run: ./makelatex.sh
+      working-directory: euler
+      shell: bash
+    - name: Commit LaTeX PDFs
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "github-actions"
@@ -21,6 +23,8 @@ runs:
         #  uses: ad-m/github-push-action@master
         #  with:
         #    github-token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Generate Euler Pages
+      shell: bash
+    - name: Generate Problem Pages
       run: ./makepages.sh
       working-directory: euler
+      shell: bash
