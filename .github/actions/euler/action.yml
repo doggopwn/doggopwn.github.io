@@ -26,10 +26,10 @@ runs:
         fi
       shell: bash
     - name: Push Euler LaTeX
-        if: env.PUSH_PDF == 'true'
-        uses: ad-m/github-push-action@master
-        with:
-          github-token: ${{ inputs.github_token }}
+      if: env.PUSH_PDF == 'true'
+      uses: ad-m/github-push-action@master
+      with:
+        github-token: ${{ inputs.github_token }}
     - name: Generate Problem Pages
       run: ./makepages.sh
       working-directory: euler
