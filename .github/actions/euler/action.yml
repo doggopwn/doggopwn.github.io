@@ -1,6 +1,11 @@
 name: Generate static 'Euler Project' files
 description: Generates all the static files for the 'Euler Project' directory
 
+inputs:
+  github_token:
+    description: "Github Token secret"
+    required: true
+
 runs:
   using: "composite"  
   steps:
@@ -18,12 +23,12 @@ runs:
         else 
         echo "::set-output name=push::true"
         fi
-        #- name: Push Euler LaTeX
-        #  if: steps.commit.latex-commit.outputs.push == 'true'
-        #  uses: ad-m/github-push-action@master
-        #  with:
-        #    github-token: ${{ secrets.GITHUB_TOKEN }}
       shell: bash
+   #- name: Push Euler LaTeX
+    #  if: steps.commit.latex-commit.outputs.push == 'true'
+    #  uses: ad-m/github-push-action@master
+    #  with:
+    #    github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Generate Problem Pages
       run: ./makepages.sh
       working-directory: euler
