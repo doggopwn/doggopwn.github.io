@@ -1,38 +1,40 @@
 name: Generate static 'Euler Project' files
 description: Generates all the static files for the 'Euler Project' directory
 
-inputs:
-  github_token:
-    description: "Github Token secret"
-    required: true
+on:
+  workflow_call:
+  workflow_dispatch:
 
-runs:
-  using: "composite"  
-  steps:
+jobs: 
+  euler:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        lfs: true
     - name: Genereate LaTeX PDFs
       if: "contains(github.event.head_commit.message, 'latex-regen')"
-      id: pdf-regen
       run: ./makelatex.sh
       working-directory: euler
       shell: bash
     - name: Commit LaTeX PDFs
-      needs: pdf-regen
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "github-actions"
         git add ./**/*.pdf
         if [[ -n "$(git status --porcelain)" ]]; then
-          git commit -m "Generate Euler PDFs" -m "[skip actions]"
-          echo "PUSH_EULER=true" >> $GITHUB_ENV
+        git commit -m "Generate Euler PDFs" -m "[skip actions]"
+        echo "PUSH_EULER=true" >> $GITHUB_ENV
         else 
-          echo "PUSH_EULER=false" >> $GITHUB_ENV
+        echo "PUSH_EULER=false" >> $GITHUB_ENV
         fi
       shell: bash
     - name: Push Euler LaTeX
       if: env.PUSH_EULER == 'true'
       uses: ad-m/github-push-action@master
       with:
-        github-token: ${{ inputs.github_token }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Generate Problem Pages
       run: ./makepages.sh
       working-directory: euler
