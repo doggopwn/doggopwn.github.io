@@ -34,7 +34,7 @@ jobs:
       if: env.PUSH_EULER == 'true'
       uses: ad-m/github-push-action@master
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Generate Problem Pages
       run: ./makepages.sh
       working-directory: euler
