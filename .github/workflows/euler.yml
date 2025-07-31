@@ -11,7 +11,7 @@ permissions:
 
 jobs: 
   euler:
-    if: "contains(github.event.head_commit.message, 'latex-regen')"
+    if: "contains(github.event.head_commit.message, 'latex-regen') || github.event_name == 'workflow_dispatch'"
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
