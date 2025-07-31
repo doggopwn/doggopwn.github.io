@@ -34,6 +34,7 @@ jobs:
     if: ${{ always() && !failure() }}
     steps:
       - name: Checkout
+        if: "needs.euler-gen.result == 'skipped'"
         uses: actions/checkout@v4
         with:
           lfs: true
