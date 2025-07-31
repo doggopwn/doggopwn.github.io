@@ -34,10 +34,9 @@ jobs:
     if: ${{ always() && !failure() }}
     steps:
       - name: Checkout
-        if: "needs.euler-gen.result == 'skipped'"
         uses: actions/checkout@v4
         with:
-          lfs: true
+          lfs: false
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
