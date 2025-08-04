@@ -74,4 +74,4 @@ jobs:
       with:
         name: euler-pages
         path: euler
-        github-token: ${{ sercets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
