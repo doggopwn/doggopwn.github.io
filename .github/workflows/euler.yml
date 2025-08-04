@@ -10,8 +10,33 @@ permissions:
   id-token: write
 
 jobs: 
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      pdf: ${{ steps.filter.outputs.pdf }}
+      js: ${{ steps.filter.outputs.js }}
+      c: ${{ steps.filter.outputs.c }}
+      asm: ${{ steps.filter.outputs.asm }}
+      any: ${{ steps.filter.outputs.anything }}
+    steps:
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            pdf: 
+              - 'euler/**/*.tex'
+            js: 
+              - 'euler/**/*.js'
+            c: 
+              - 'euler/**/*.c'
+            asm:
+              - 'euler/**/*.asm'
+            anything: 
+              - 'euler/**/'
+
   euler:
-    if: "contains(github.event.head_commit.message, 'latex-regen') || github.event_name == 'workflow_dispatch'"
+    needs: check-changes
+    if: ${{ needs.check-changes.outputs.anything }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -19,22 +44,23 @@ jobs:
       with:
         lfs: true
     - name: Generate LaTeX PDFs
+      if: ${{ needs.check-changes.outputs.pdf }}
       run: ./makelatex.sh
       working-directory: euler
       shell: bash
-    - name: Commit LaTeX PDFs
+    - name: Commit Euler Files
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "github-actions"
-        git add ./**/*.pdf
+        git add .
         if [[ -n "$(git status --porcelain)" ]]; then
-        git commit -m "Generate Euler PDFs" -m "[skip actions]"
+        git commit -m "Generate Euler Files" -m "[skip actions]"
         echo "PUSH_EULER=true" >> $GITHUB_ENV
         else 
         echo "PUSH_EULER=false" >> $GITHUB_ENV
         fi
       shell: bash
-    - name: Push Euler LaTeX
+    - name: Push Euler Files
       if: env.PUSH_EULER == 'true'
       uses: ad-m/github-push-action@master
       with:
@@ -43,3 +69,9 @@ jobs:
       run: ./makepages.sh
       working-directory: euler
       shell: bash
+    - name: Upload Euler Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: euler-pages
+        path: euler
+        github-token: ${{ sercets.GITHUB_TOKEN }}
