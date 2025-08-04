@@ -49,23 +49,6 @@ jobs:
       run: ./makelatex.sh
       working-directory: euler
       shell: bash
-    - name: Commit Euler Files
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "github-actions"
-        git add .
-        if [[ -n "$(git status --porcelain)" ]]; then
-        git commit -m "Generate Euler Files" -m "[skip actions]"
-        echo "PUSH_EULER=true" >> $GITHUB_ENV
-        else 
-        echo "PUSH_EULER=false" >> $GITHUB_ENV
-        fi
-      shell: bash
-    - name: Push Euler Files
-      if: env.PUSH_EULER == 'true'
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Generate Problem Pages
       run: ./makepages.sh
       working-directory: euler
