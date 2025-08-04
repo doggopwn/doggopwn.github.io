@@ -97,4 +97,6 @@ printf "$indexcontent" > ./index
 
 echo "Generated index file at ./index"
 
+cat ./index
+
 rm -rf $TMP
