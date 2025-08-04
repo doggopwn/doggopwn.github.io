@@ -17,7 +17,7 @@ jobs:
       js: ${{ steps.filter.outputs.js }}
       c: ${{ steps.filter.outputs.c }}
       asm: ${{ steps.filter.outputs.asm }}
-      any: ${{ steps.filter.outputs.anything }}
+      anything: ${{ steps.filter.outputs.changes }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,12 +34,10 @@ jobs:
               - 'euler/**/*.c'
             asm:
               - 'euler/**/*.asm'
-            anything: 
-              - 'euler/**/'
 
   euler:
     needs: check-changes
-    if: ${{ needs.check-changes.outputs.anything }}
+    if: ${{ needs.check-changes.outputs.anything != '[]' }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
