@@ -37,7 +37,7 @@ jobs:
         with:
           lfs: false
       - name: Download Euler Artifact
-        if: ${{ needs.euler-gen.outputs.skip-artifact == "false" }}
+        if: ${{ needs.euler-gen.outputs.skip-artifact == 'false' }}
         uses: actions/download-artifact@v4
         with:
           name: euler-pages
