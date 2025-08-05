@@ -3,6 +3,10 @@ description: Generates all the static files for the 'Euler Project' directory
 
 on:
   workflow_call:
+    outputs:
+      success:
+        description: "Boolean indicating whether the generation succeeded"
+        value: ${{ jobs.euler.result == 'success' }}
   workflow_dispatch:
 
 permissions:
