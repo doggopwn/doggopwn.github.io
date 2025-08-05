@@ -37,12 +37,11 @@ jobs:
         with:
           lfs: false
       - name: Download Euler Artifact
-        if: ${{ needs.euler-gen.outputs.success }}
+        if: ${{ needs.euler-gen.outputs.skip-artifact == "false" }}
         uses: actions/download-artifact@v4
         with:
           name: euler-pages
           path: euler
-      - run: echo "should skip? ${{ needs.euler-gen.outputs.skip-artifact }} end"
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
