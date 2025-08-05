@@ -4,9 +4,9 @@ description: Generates all the static files for the 'Euler Project' directory
 on:
   workflow_call:
     outputs:
-      success:
-        description: "Boolean indicating whether the generation succeeded"
-        value: ${{ jobs.euler.result == 'success' }}
+      skip-artifact:
+        description: "Boolean indicating whether to skip downloading the artifact"
+        value: ${{ jobs.euler.outputs.skip-artifact }}
   workflow_dispatch:
 
 permissions:
@@ -43,6 +43,8 @@ jobs:
     needs: check-changes
     if: ${{ needs.check-changes.outputs.anything != '[]' }}
     runs-on: ubuntu-latest
+    outputs:
+      skip-artifact: ${{ steps.set-noskip.outputs.noskip }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -62,3 +64,5 @@ jobs:
       with:
         name: euler-pages
         path: euler
+    - id: set-noskip
+      run: echo "noskip=false" >> "$GITHUB_OUTPUT"
