@@ -1,18 +1,21 @@
 \pdfminorversion=4
 \documentclass[]{article}
-% triggerme!m
+
 %%%%%%%%%%%%%%%%%%%
 % Packages/Macros %
 %%%%%%%%%%%%%%%%%%%
 \usepackage{amssymb,latexsym,geometry,xcolor,framed,url,standalone}     % Standard packages
-\usepackage{amsmath}
+\usepackage[fleqn]{amsmath}
 \usepackage{colors}
 %%%%%%%%%%%%
 % Document %
 %%%%%%%%%%%%
 \newgeometry{left=1cm,top=1cm,right=1cm,bottom=2cm}
 
+\newcommand{\red}[1]{\color{red}\boldsymbol{#1}\color{black}}
+
 \begin{document}
+\setbool{@fleqn}{false}
 \allowdisplaybreaks
 \raggedbottom
 
@@ -28,9 +31,9 @@ To better describe the patterns, let's assign letters to the specific natural nu
 Demonstrated on $N=2$:
 \begin{align*}
 \mathbf{N} &= 2\\
-1^2 + 2^2 &\rightarrow \color{red}a^2 + b^2\color{black} \\
+1^2 + 2^2 &\rightarrow \red{a^2 + b^2}  \\
 &= 5\\
-(1 + 2)^2 &\rightarrow (a + b)^2 = \color{red}a^2\color{black} + 2ab + \color{red}b^2\color{black} \\
+(1 + 2)^2 &\rightarrow (a + b)^2 = \red{a^2}  + 2ab + \red{b^2}  \\
 &= 9\\[2ex]
 \Delta &= 4\\
 %
@@ -38,46 +41,63 @@ Demonstrated on $N=2$:
 %
 \mathbf{N} &= 3 \\
 (a + b + c)^2 &= (a^2 + ab + ac) + (ba + b^2 + bc) + (ca + cb + c^2) \\
-&= a^2 + b^2 + c^2 + \color{red}2ab + 2ac + 2bc\color{black}\\[3ex]
+&= a^2 + b^2 + c^2 + \red{2ab + 2ac + 2bc} \\[3ex]
 \mathbf{N} &= 4 \\
-(a + b + c + d)^2 &= ... + \color{red}2ab + 2ac + 2ad + 2bc + 2bd + 2cd\color{black} \\
+(a + b + c + d)^2 &= ... + \red{2ab + 2ac + 2ad + 2bc + 2bd + 2cd}  \\
 %
-\intertext{The FOIL expansion gives a hint as to what's going on - after summing the terms, we may notice that for any $N$, the difference is the product of the terms times two, for every pair of terms, each multiplied with each other exactly once.}
+\intertext{The polynomial expansion gives a hint as to what's going on - after summing the terms, we may notice that for any $N$, the difference is the product of each two terms (i.e. a, b, ...) multiplied by two.}
 \end{align*}
-
-\noindent \text{Generally, for N, where }a=1, ~b=2\text{ etc. until N:}\\~\\
-\text{1. In the inner brackets, we [summarize N-1 terms, starting with a, up until N-1]. We will call each term "i"}\\
-\text{2. We multiply those by the [sum of N-1 terms, starting with i+1, up until N]. We will call each term "j" }\\~\\
-\text{In other words, starting with a, we do:}\\
-$a\cdot b + a\cdot c + a\cdot d + ... + a\cdot N$\\~\\
-\text{And repeat for each number, increasing by 1 up until N-1, e.g. the next sequence would be:}\\
-$b\cdot c + b\cdot d + ... + b\cdot N$\\~\\
-\text{We then sum all these sequences, and multiply the result by 2. Notice we described the observed pattern:}\\
-$2[ a(b+c+d)     + b(c+d)     + c(d) + ... + (N-1)(N)]$\\
-\\
+\newpage
+\begin{align*}
+\intertext{To see the pattern even clearer, with the ever-increasing amount of terms, we may start with $a$, and letter by letter factor them out, as such:}
+\mathbf{N} &= 2\\
+\Delta &= 2~[a(b)]\\[3ex]
+\mathbf{N} &= 3\\
+\Delta &= 2~[a(b+c) + b(c)]\\[3ex]
+\mathbf{N} &= 4\\
+\Delta &= 2~[a(b+c+d) + b(c+d) + c(d)]\\[3ex]
+\mathbf{N} &= 5\\
+\Delta &= 2~[a(b+c+d+e) + b(c+d+e) + c(d+e) + d(e)]
+\intertext{The last step needed to rewrite this mathematically is to notice the range of the terms. \newline Firstly, the outer terms start with a, and end at $(N-1)$, such as when $N=4$: we start with $a$, and end at $c$ (3rd term). }
+\Delta &= 2~[\red{a}(...) + \red{b}(...) + \red{c}(...) ]
+\intertext{Written as a sum, where we label the current term as $i$:}
+&\sum_{i=1}^{N-1}i
+\intertext{Secondly, the inner terms start with the next letter after the outer term ($i+1$), and end at $N$, such as when $N=4$: for the first bracket, we start with $b$ (since the outer factor is $a$) and end at $d$.}
+\Delta &= 2~[a(\red{b+c+d}) + b(\red{c+d}) + ...]
+\intertext{Again, written as a sum, realizing there is a bracket for each outer term (each $i$), and labellling each term as $j$:}
+&\sum_{j=i+1}^{N}j
+\\~\\
+%
+\intertext{Putting it together, recall we are iterating over the letters starting from $a$ ($1$), up until $(N-1)$, and every time multiply this by the second sum described (added terms $i+1$ to $N$). The double sum emerges:}
+&\sum_{i=1}^{N-1}\sum_{j=i+1}^{N}i\cdot j
+\intertext{We must of course not forget the factor of $2$ applied to this whole expression we conveniently ignored in the previous steps for simplification. The very final double sum is written as such:}
+&2\sum_{i=1}^{N-1}\sum_{j=i+1}^{N}i\cdot j
+\end{align*}
 \begingroup
 \addtolength{\jot}{1em}
 \subsection*{Deriving the formula}
+\newpage
 \begin{flalign*}
-&2\sum_{i=1}^{N-1}\sum_{j=i+1}^{N}i\cdot j & \text{rewritten as a double sum} \\
-&2\sum_{i=1}^{N-1}i\sum_{j=i+1}^{N}j & \text{extract independent term}\\
-&2\sum_{i=1}^{N-1}i(\sum_{j=1}^{N}j-\sum_{j=1}^{i}j) & \text{by }\textbf{Lemma 1} \\
-&2\sum_{i=1}^{N-1}i(N\frac{1+N}{2}-i\frac{1+i}{2}) & \text{by }\textbf{Lemma 2.1}\\
-&2\sum_{i=1}^{N-1}\frac{i}{2}[N(1+N)-i(1+i)] & \text{factor out }\frac{1}{2}\\
-&\sum_{i=1}^{N-1}i[N(1+N)-i(1+i)]& c\sum_{i=1}^{n}a_i=\sum_{i=1}^{n}ca_i\\ 
-&\sum_{i=1}^{N-1}i[N^2+N-(i^2+i)]&\text{distribute all brackets}\\
+&2\sum_{i=1}^{N-1}\sum_{j=i+1}^{N}i\cdot j & \text{derived sum} \\
+&2\sum_{i=1}^{N-1}i\sum_{j=i+1}^{N}j & c\sum_{i=1}^{n}a_i=\sum_{i=1}^{n}ca_i\\
+&2\sum_{i=1}^{N-1}i\left(\sum_{j=1}^{N}j-\sum_{j=1}^{i}j\right) & \text{by }\textbf{Corollary 1} \\
+&2\sum_{i=1}^{N-1}i\left(\frac{N(N+1)}{2}-\frac{i(i+1)}{2}\right) & \text{by }\textbf{Lemma 2.1}\\
+&2\sum_{i=1}^{N-1}\frac{i}{2}[N(N+1)-i(i+1)] & \text{factor out }\frac{1}{2}\\
+&\sum_{i=1}^{N-1}i[N(N+1)-i(i+1)]& c\sum_{i=1}^{n}a_i=\sum_{i=1}^{n}ca_i\\ 
+&\sum_{i=1}^{N-1}i[N^2+N-i^2-i)]&\text{distribute all brackets}\\
 &\sum_{i=1}^{N-1}(iN^2+iN-i^3-i^2) & \\
-&N^2\sum_{i=1}^{N-1}i+N\sum_{i=1}^{N-1}i-\sum_{i=1}^{N-1}i^3-\sum_{i=1}^{N-1}i^2 & \sum_{i=1}^{n}(a_i+b_i)=\sum_{i=1}^{n}a_i+\sum_{i=1}^{n}b_i\\
-&N^2\frac{(N-1)N}{2}+N\frac{N(N-1)}{2}-\frac{(N-1)^2(N^2)}{4}-\frac{N(N-1)(2N-1)}{6} & \text{by }\textbf{Lemmas 1.1, 1.2, 1.3}\\
-&N(N-1)(\frac{N^2}{2}+\frac{N}{2}-\frac{(N-1)N}{4}-\frac{2N-1}{6}) & \text{factor out }N(N-1)\\
-&N(N-1)(\frac{6N^2}{12}+\frac{6N}{12}-\frac{3N^2-3N}{12}-\frac{4N-2}{12}) &  \text{combine fractions}\\
+&\sum_{i=1}^{N-1}iN^2+\sum_{i=1}^{N-1}iN-\sum_{i=1}^{N-1}i^3-\sum_{i=1}^{N-1}i^2 & \sum_{i=1}^{n}(a_i+b_i)=\sum_{i=1}^{n}a_i+\sum_{i=1}^{n}b_i\\
+&N^2\sum_{i=1}^{N-1}i+N\sum_{i=1}^{N-1}i-\sum_{i=1}^{N-1}i^3-\sum_{i=1}^{N-1}i^2 & c\sum_{i=1}^{n}a_i=\sum_{i=1}^{n}ca_i\\
+&N^2\frac{N(N-1)}{2}+N\frac{N(N-1)}{2}-\frac{N^2(N-1)^2}{4}-\frac{N(N-1)(2N-1)}{6} & \text{by }\textbf{Lemmas 2.1, 2.2, 2.3}\\
+&N(N-1)\left(\frac{N^2}{2}+\frac{N}{2}-\frac{N(N-1)}{4}-\frac{2N-1}{6}\right) & \text{factor out }N(N-1)\\
+&N(N-1)\left(\frac{6N^2}{12}+\frac{6N}{12}-\frac{3N^2-3N}{12}-\frac{4N-2}{12}\right) &  \text{combine fractions}\\
 &N(N-1)\frac{3N^2+5N+2}{12} \\
 &N(N-1)\frac{(3N+2)(N+1)}{12} & \text{factor the numerator}\\
 &N\frac{(N^2-1)(3N+2))}{12} & (a+b)(a-b)=a^2-b^2\\
-&N\frac{3N^3+2N^2-3N-2}{12}\\
-&\frac{3N^4+2N^3-3N^2-2N}{12}& \text{distribute and simplify}\\
+&N\frac{3N^3+2N^2-3N-2}{12} & \text{distribute and simplify}\\
+&\frac{3N^4+2N^3-3N^2-2N}{12}\\
 \end{flalign*}
-\text{And we arrive at a closed form formula for the sum square difference for any N.}\\
+\text{And we arrive at a closed form formula for the sum square difference for any $N$.}\\
 \subsection*{Answering the question ($N=100$)}
 \vspace{10pt}
 \begin{graybox}
@@ -95,5 +115,6 @@ Using the formula derived earlier:
 \end{flalign*}
 \endgroup
 \newpage
+\setbool{@fleqn}{true}
 \input{corollaries}
 \end{document}
