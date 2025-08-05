@@ -7,7 +7,6 @@ on:
       skip-artifact:
         description: "Boolean indicating whether to skip downloading the artifact"
         value: ${{ jobs.euler.outputs.skip-artifact }}
-  workflow_dispatch:
 
 permissions:
   contents: write
