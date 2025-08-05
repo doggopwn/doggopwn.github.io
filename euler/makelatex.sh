@@ -15,6 +15,7 @@ rm minitex.tar.gz
 
 echo "Compiling latex files.."
 
+failed=0
 chmod +x ./minitex/bin/x86_64-linux/pdflatex
 for problem in "${problemdirs[@]}"; do
 	cd $problem
@@ -25,8 +26,13 @@ for problem in "${problemdirs[@]}"; do
 		rm ./solution.log
 	else
 		echo "Failed to generate $problem/solution.pdf"
+		failed=1
 	fi
 	cd - >/dev/null
 done
 
 rm -rf ./minitex
+
+if [[ "$failed" -eq "1" ]]; then
+	exit 1
+fi
