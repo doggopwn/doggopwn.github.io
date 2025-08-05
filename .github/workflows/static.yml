@@ -42,7 +42,7 @@ jobs:
         with:
           name: euler-pages
           path: euler
-      - run: echo "should skip? ${{ needs.outputs.skip-artifact }} end"
+      - run: echo "should skip? ${{ needs.euler-gen.outputs.skip-artifact }} end"
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
